@@ -51,4 +51,43 @@ public class LinkedList {
             }
         }
     }
+
+    public String toString() {
+        if(head == null){
+            return "[]";
+        }
+        Node temp = head;
+        String str = "[";
+        while(temp.next != null){
+            str += temp.data + ", ";
+            temp = temp.next;
+        }
+        str += temp.data;
+        return str + "]";
+    }
+
+    public Object removeFirst(){
+        Node temp = head;
+        head = temp.next;
+        Object returnData = temp.data;
+        temp = null;
+        size--;
+        return returnData;
+    }
+
+    public Object remove(int k){
+        if(k == 0) return removeFirst();
+        Node temp = getNode(k-1);
+        Node todoDeleted = temp.next;
+        temp.next = temp.next.next;
+        Object returnData = todoDeleted.data;
+        if(todoDeleted == tail){
+            tail = temp;
+        }
+        todoDeleted = null;
+        size--;
+        return returnData;
+    }
+
+
 }
