@@ -5,10 +5,10 @@ package com.hewonjeong.algorithms.sorts;
  */
 public class QuickSort {
     public static <T extends Comparable<T>> T[] sort(T[] arr) {
-        return (arr == null || arr.length == 0) ? arr : qs(arr, 0, arr.length - 1);
+        return (arr == null || arr.length == 0) ? arr : quicksort(arr, 0, arr.length - 1);
     }
 
-    private static <T extends Comparable<T>> T[] qs(T[] arr, int left, int right) {
+    private static <T extends Comparable<T>> T[] quicksort(T[] arr, int left, int right) {
         int l = left, r = right;
         T pivot = arr[left + (right - left) / 2];
 
@@ -19,11 +19,10 @@ public class QuickSort {
                 swap(arr, l, r);
                 l++;
                 r--;
-            } else break;
+            }
         }
-
-        if (left < r) qs(arr, left, r);
-        if (l < right) qs(arr, l, right);
+        if (left < r) quicksort(arr, left, r);
+        if (l < right) quicksort(arr, l, right);
 
         return arr;
     }
