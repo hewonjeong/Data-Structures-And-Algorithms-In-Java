@@ -1,8 +1,6 @@
 package com.hewonjeong.algorithms.sorts;
 
-/**
- * Created by Hewon Jeong on 27/03/2017.
- */
+
 public class QuickSort {
     public static <T extends Comparable<T>> T[] sort(T[] arr) {
         return (arr == null || arr.length == 0) ? arr : quicksort(arr, 0, arr.length - 1);
