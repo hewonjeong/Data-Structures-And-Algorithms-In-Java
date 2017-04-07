@@ -4,7 +4,7 @@ package com.hewonjeong.algorithms.sorts;
  * Created by Hewon Jeong on 27/03/2017.
  */
 public class BubbleSort<T extends Comparable<T>> {
-    public static <T extends Comparable<T>> T[] sort(T[] arr) {
+     public static <T extends Comparable<T>> T[] sort(T[] arr) {
         boolean swapped = true;
         int len = arr.length;
         while (swapped) {

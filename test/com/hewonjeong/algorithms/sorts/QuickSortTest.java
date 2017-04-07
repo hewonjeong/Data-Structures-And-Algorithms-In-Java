@@ -3,10 +3,11 @@ package com.hewonjeong.algorithms.sorts;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class QuickSortTest {
@@ -15,24 +16,18 @@ public class QuickSortTest {
     private static final int MAX = 100;
 
     private static Integer[] unsorted;
-    private static Integer[] expected;
-
     private static String[] empty;
     private static String[] singleStr;
     private static String[] doubleStr;
-
     private static Integer[] duplicated;
 
     @BeforeAll
     public static void initAll() {
         unsorted = new Integer[SIZE];
-        expected = new Integer[SIZE];
         for (int i = 0; i < unsorted.length; i++) {
             int val = RANDOM.nextInt(MAX);
             unsorted[i] = val;
-            expected[i] = val;
         }
-        Arrays.sort(expected);
 
         empty = new String[0];
         singleStr = new String[]{"apple"};
@@ -44,7 +39,7 @@ public class QuickSortTest {
     @Test
     public void testNull() {
         Integer[] result = QuickSort.sort(null);
-        assertEquals(result, null);
+        assertNull(result);
     }
 
     @Test
@@ -61,9 +56,6 @@ public class QuickSortTest {
 
     @Test
     public void testDouble() {
-        assertTrue(doubleStr.length == 2);
-        assertFalse(TestUtil.isSorted(doubleStr));
-
         String[] result = QuickSort.sort(doubleStr);
         assertTrue(TestUtil.isSorted(result));
     }
@@ -81,8 +73,6 @@ public class QuickSortTest {
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
         System.out.println("elapsedTime: " + elapsedTime);
-
         assertTrue(TestUtil.isSorted(unsorted));
-        assertArrayEquals(expected, unsorted);
     }
 }
