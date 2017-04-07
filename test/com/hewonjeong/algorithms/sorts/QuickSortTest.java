@@ -1,105 +1,88 @@
 package com.hewonjeong.algorithms.sorts;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class QuickSortTest {
-    private Integer[] numbers;
-    private final static int SIZE = 7;
-    private final static int MAX = 20;
+    private static final Random RANDOM = new Random();
+    private static final int SIZE = 10000;
+    private static final int MAX = 100;
 
-    @BeforeEach
-    public void setUp() throws Exception {
-        numbers = new Integer[SIZE];
-        Random generator = new Random();
-        for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = generator.nextInt(MAX);
+    private static Integer[] unsorted;
+    private static Integer[] expected;
+
+    private static String[] empty;
+    private static String[] singleStr;
+    private static String[] doubleStr;
+
+    private static Integer[] duplicated;
+
+    @BeforeAll
+    public static void initAll() {
+        unsorted = new Integer[SIZE];
+        expected = new Integer[SIZE];
+        for (int i = 0; i < unsorted.length; i++) {
+            int val = RANDOM.nextInt(MAX);
+            unsorted[i] = val;
+            expected[i] = val;
         }
+        Arrays.sort(expected);
+
+        empty = new String[0];
+        singleStr = new String[]{"apple"};
+        doubleStr = new String[]{"Bape", "Apple"};
+        duplicated = new Integer[]{5, 5, 6, 6, 4, 4, 5, 5, 4, 4, 6, 6, 5, 5};
+
     }
 
     @Test
     public void testNull() {
-        QuickSort sorter = new QuickSort();
-        sorter.sort(null);
+        Integer[] result = QuickSort.sort(null);
+        assertEquals(result, null);
     }
 
     @Test
     public void testEmpty() {
-        QuickSort sorter = new QuickSort();
-        sorter.sort(new Integer[0]);
+        String[] result = QuickSort.sort(empty);
+        assertEquals(result, empty);
     }
 
     @Test
-    public void testSimpleElement() {
-        QuickSort sorter = new QuickSort();
-        Integer[] test = new Integer[1];
-        test[0] = 5;
-        sorter.sort(test);
+    public void testSingle() {
+        String[] result = QuickSort.sort(singleStr);
+        assertTrue(TestUtil.isSorted(result));
     }
 
     @Test
-    public void testSpecial() {
-        QuickSort sorter = new QuickSort();
-        Integer[] test = { 5, 5, 6, 6, 4, 4, 5, 5, 4, 4, 6, 6, 5, 5 };
-        sorter.sort(test);
-        if (!validate(test)) {
-            fail("Should not happen");
-        }
-        printResult(test);
+    public void testDouble() {
+        assertTrue(doubleStr.length == 2);
+        assertFalse(TestUtil.isSorted(doubleStr));
+
+        String[] result = QuickSort.sort(doubleStr);
+        assertTrue(TestUtil.isSorted(result));
+    }
+
+    @Test
+    public void testDuplicate() {
+        Integer[] result = QuickSort.sort(duplicated);
+        assertTrue(TestUtil.isSorted(result));
     }
 
     @Test
     public void testQuickSort() {
-        for (Integer i : numbers) {
-            System.out.println(i + " ");
-        }
         long startTime = System.currentTimeMillis();
+        QuickSort.sort(unsorted);
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
+        System.out.println("elapsedTime: " + elapsedTime);
 
-        QuickSort sorter = new QuickSort();
-        sorter.sort(numbers);
-
-        long stopTime = System.currentTimeMillis();
-        long elapsedTime = stopTime - startTime;
-        System.out.println("QuickSort " + elapsedTime);
-
-        if (!validate(numbers)) {
-            fail("Should not happen");
-        }
-        assertTrue(true);
-    }
-
-    @Test
-    public void testStandardSort() {
-        long startTime = System.currentTimeMillis();
-        Arrays.sort(numbers);
-        long stopTime = System.currentTimeMillis();
-        long elapsedTime = stopTime - startTime;
-        System.out.println("Standard Java sort " + elapsedTime);
-        if (!validate(numbers)) {
-            fail("Should not happen");
-        }
-        assertTrue(true);
-    }
-
-    private boolean validate(Integer[] numbers) {
-        for (int i = 1; i < numbers.length - 1; i++) {
-            if (numbers[i] > numbers[i + 1]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void printResult(Integer[] numbers) {
-        for (int i = 0; i < numbers.length; i++) {
-            System.out.print(numbers[i]);
-        }
-        System.out.println();
+        assertTrue(TestUtil.isSorted(unsorted));
+        assertArrayEquals(expected, unsorted);
     }
 }
