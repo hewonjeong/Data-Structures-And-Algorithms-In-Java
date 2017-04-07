@@ -3,7 +3,7 @@ package com.hewonjeong.algorithms.sorts;
 /**
  * Created by Hewon Jeong on 27/03/2017.
  */
-public class InsertionSrot {
+public class InsertionSort {
     public static <T extends Comparable<T>> T[] sort(T[] arr) {
         for (int i = 1; i < arr.length; i++) {
             T target = arr[i];
