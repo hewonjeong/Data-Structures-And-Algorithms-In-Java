@@ -8,7 +8,7 @@ public class QuickSort {
 
     private static <T extends Comparable<T>> T[] quicksort(T[] arr, int left, int right) {
         int l = left, r = right;
-        T pivot = arr[left + (right - left) / 2];
+        T pivot = arr[(left + right) / 2];
 
         while (l <= r) {
             while (arr[l].compareTo(pivot) < 0) l++;
