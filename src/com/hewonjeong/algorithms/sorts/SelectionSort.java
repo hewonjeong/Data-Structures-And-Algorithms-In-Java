@@ -1,8 +1,5 @@
 package com.hewonjeong.algorithms.sorts;
 
-/**
- * Created by Hewon Jeong on 27/03/2017.
- */
 public class SelectionSort {
     public static <T extends Comparable<T>> T[] sort(T[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
